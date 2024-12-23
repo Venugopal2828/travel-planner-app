@@ -178,12 +178,12 @@ const HotelPage = () => {
               </div>
             </div>
           </div>
-          <div className="right-section">
+          {/* <div className="right-section">
             <h1>Live as if</h1>
             <h2>The Paradise</h2>
             <p>is on earth</p>
-            <button className="plan-trip-button">Plan a Trip</button>
-          </div>
+            <button className="plan-trip-button">Plan a Trip</button> 
+          </div> */}
         </div>
       </div>
     </div>
