@@ -12,6 +12,7 @@ const BeachPage = () => {
   const [filters, setFilters] = useState({
       maxDistance: 50,
       price: 1000,
+      
       minRating: 0,
     });
   

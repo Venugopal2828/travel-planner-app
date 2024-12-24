@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./Nature.css";
+import "./NaturePage.css";
 
 const NaturePage = () => {
   const stays = [
