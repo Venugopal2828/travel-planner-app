@@ -1,190 +1,229 @@
-import React, { useState } from "react";
-import "./NaturePage.css";
+import React, { useState, useEffect } from 'react';
+import { useCart } from './CartContext'; // Importing the custom hook
 
 const HotelPage = () => {
-  const stays = [
-    { name: "Pura Tanah Lot", price: "$555 / night", rating: 4.5, reviews: 120 },
-    { name: "Udaya Resort and Spa", price: "$160 / night", rating: 4.5, reviews: 98 },
-    { name: "Jimbaran Stay", price: "$186 / night", rating: 4.5, reviews: 74 },
-    { name: "Nusa Dusa", price: "$325 / night", rating: 4.5, reviews: 99 },
-    { name: "Bali Boutique Hotel", price: "$200 / night", rating: 4.4, reviews: 80 },
-    { name: "Seaside Villa", price: "$300 / night", rating: 4.6, reviews: 110 },
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [city, setCity] = useState('');
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
+  const [guests, setGuests] = useState(1);
+  const [hotels, setHotels] = useState([]);
+
+  const { cart, addToCart } = useCart(); // Ensure addToCart is coming from the context
+
+  const carouselImages = [
+    'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?cs=srgb&dl=pexels-thorsten-technoman-109353-338504.jpg&fm=jpg',
+    'https://www.ohotelsindia.com/goa/images/bccadd6018a0421487734769d7014e73.jpg',
+    'https://www.palaceresorts.com/moon_palace_punta_cana_palace_resorts_8e6872ed24.webp',
   ];
-  const [filters, setFilters] = useState({
-    maxDistance: 50,
-    price: 1000,
-    minRating: 0,
-  });
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: parseFloat(value),
-    }));
-  };
-  const filteredStays = stays.filter((stay) => {
-    const stayPrice = parseFloat(stay.price.replace(/[^0-9.]/g, ""));
-    return stayPrice <= filters.price && stay.rating >= filters.minRating;
-  });
+  const statesInIndia = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands",
+    "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Lakshadweep", "Delhi", "Puducherry"
+  ];
 
-  const [showAdditionalFilters, setShowAdditionalFilters] = useState(false);
-  const toggleAdditionalFilters = () => {
-    setShowAdditionalFilters((prev) => !prev);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setHotels([
+      {
+        name: 'Luxury Hotel',
+        location: city,
+        price: '₹5000',
+        image: 'https://www.palaceresorts.com/moon_palace_punta_cana_palace_resorts_8e6872ed24.webp',
+      },
+      {
+        name: 'Seaside Resort',
+        location: city,
+        price: '₹6000',
+        image: 'https://images.squarespace-cdn.com/content/v1/62dfa656a2986f7b76f75c92/1658824441045-RYTWQQGICIUX6WN1TCXZ/Carib+Dev.jpg',
+      },
+      {
+        name: 'Mountain Retreat',
+        location: city,
+        price: '₹7000',
+        image: 'https://media.istockphoto.com/id/641448082/photo/beautiful-tropical-beach-front-hotel-resort-with-swimming-pool-sunshine.jpg?s=612x612&w=0&k=20&c=9PyitcP743oS7oGAoSW8iGDjf1goapy40Ol7PcCNv24=',
+      },
+      {
+        name: 'wonder Resort',
+        location: city,
+        price: '₹6000',
+        image: 'https://images.squarespace-cdn.com/content/v1/62dfa656a2986f7b76f75c92/1658824441045-RYTWQQGICIUX6WN1TCXZ/Carib+Dev.jpg',
+      },
+      {
+        name: 'dayum hotels',
+        location: city,
+        price: '₹7000',
+        image: 'https://media.istockphoto.com/id/641448082/photo/beautiful-tropical-beach-front-hotel-resort-with-swimming-pool-sunshine.jpg?s=612x612&w=0&k=20&c=9PyitcP743oS7oGAoSW8iGDjf1goapy40Ol7PcCNv24=',
+      },
+    ]);
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % carouselImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [carouselImages.length]);
 
   return (
-    <div className="background-container">
-      <div className="content-container">
-        <div className="sidebar">
-          <ul>
-            <li>Home</li>
-            <li>🏨 Hotels</li>
-            <li>✈️ Flights</li>
-            <li>📍 Attractions</li>
-            <li>📜 Plans</li>
-          </ul>
-          <hr className="line-separator" />
-          <div className="cd-filter-wrapper">
-            <div className="cd-filter-header">
-              <h4>Filter By</h4>
-            </div>
-            <div className="cd-filters">
-              <form>
-                <div className="cd-filter-block">
-                  <h5>Price</h5>
-                  <label>
-                    Max Price: ${filters.price}
-                    <input
-                      type="range"
-                      name="price"
-                      value={filters.price}
-                      min="0"
-                      max="1000"
-                      step="50"
-                      onChange={handleFilterChange}
-                      aria-label="Filter by maximum price"
-                    />
-                  </label>
-                </div>
-                <div className="cd-filter-block">
-                  <h5>Rating</h5>
-                  <label>
-                    Minimum Rating: {filters.minRating} ⭐
-                    <input
-                      type="range"
-                      name="minRating"
-                      value={filters.minRating}
-                      min="0"
-                      max="5"
-                      step="0.5"
-                      onChange={handleFilterChange}
-                      aria-label="Filter by minimum rating"
-                    />
-                  </label>
-                </div>
-              </form>
-              <button
-                type="button"
-                onClick={toggleAdditionalFilters}
-                className="toggle-filters-btn"
-              >
-                {showAdditionalFilters ? "Hide Additional Filters" : "Show Additional Filters"}
-              </button>
-              {showAdditionalFilters && (
-                <div className="additional-filters">
-                  {/* Amenities */}
-                  <div className="filter-category">
-                    <h4>Amenities</h4>
-                    <label>
-                      <input type="checkbox" name="wifi" value="wifi" /> WiFi
-                    </label>
-                    <label>
-                      <input type="checkbox" name="pool" value="pool" /> Pool
-                    </label>
-                    <label>
-                      <input type="checkbox" name="geyser" value="geyser" /> Geyser
-                    </label>
-                    <label>
-                      <input type="checkbox" name="parking" value="parking" /> Parking
-                    </label>
-                  </div>
-                  {/* Distance */}
-                  <div className="filter-category">
-                    <h4>Distance</h4>
-                    <input type="range" min="0" max="50" step="1" />
-                    <p>Adjust the distance range (in km)</p>
-                  </div>
-                  {/* Room Type */}
-                  <div className="filter-category">
-                    <h4>Room Type</h4>
-                    <label>
-                      <input type="checkbox" name="deluxe" value="deluxe" /> Deluxe
-                    </label>
-                    <label>
-                      <input type="checkbox" name="suite" value="suite" /> Suite
-                    </label>
-                    <label>
-                      <input type="checkbox" name="studio" value="studio" /> Studio Room
-                    </label>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="main-content">
-          <div className="left-section">
-          <div className="search-bar-container">
-              <input
-                type="text"
-                placeholder="Thessaloniki"
-                className="search-destination"
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Hero Section */}
+      <div className="hero-section" style={{ overflow: 'hidden', position: 'relative', height: '350px' }}>
+        <div
+          className="carousel-container"
+          style={{
+            display: 'flex',
+            transition: 'transform 0.5s ease-in-out',
+            transform: `translateX(-${currentSlide * 100}%)`,
+            width: `${carouselImages.length * 100}%`,
+          }}
+        >
+          {carouselImages.map((image, index) => (
+            <div key={index} style={{ flex: '1 0 100%' }}>
+              <img
+                src={image}
+                alt={`Slide ${index + 1}`}
+                style={{ width: '100%', height: '350px', objectFit: 'cover' }}
               />
-              <div className="date-picker">
-                <input type="date" className="start-date" />
-                <input type="date" className="end-date" />
-              </div>
-              <div className="guest-selector">
-                <select className="guest-dropdown">
-                  <option value="1">1 adult</option>
-                  <option value="2">2 adults</option>
-                  <option value="3">3 adults</option>
-                  <option value="4">4 adults</option>
-                </select>
-              </div>
-              <button className="search-button">SEARCH</button>
             </div>
-
-            <h3>Popular Stays</h3>
-            <div className="scrollable-container">
-              <div className="stays-list">
-                {filteredStays.length > 0 ? (
-                  filteredStays.map((stay, index) => (
-                    <div className="stay-card" key={index}>
-                      <div className="stay-image"></div>
-                      <div className="stay-details">
-                        <h4>{stay.name}</h4>
-                        <p>{stay.price}</p>
-                        <span>
-                          ⭐ {stay.rating} ({stay.reviews} reviews)
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p>No stays match the selected filters.</p>
-                )}
-              </div>
-            </div>
-          </div>
-          {/* <div className="right-section">
-            <h1>Live as if</h1>
-            <h2>The Paradise</h2>
-            <p>is on earth</p>
-            <button className="plan-trip-button">Plan a Trip</button> 
-          </div> */}
+          ))}
         </div>
+      </div>
+
+      {/* Search Form */}
+      <div className="search-form" style={{ padding: '20px', textAlign: 'center' }}>
+        <form onSubmit={handleSearch}>
+          <select
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            style={{ padding: '10px', marginRight: '10px' }}
+          >
+            <option value="">Select City</option>
+            {statesInIndia.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="date"
+            value={checkInDate}
+            onChange={(e) => setCheckInDate(e.target.value)}
+            style={{ padding: '10px', marginRight: '10px' }}
+          />
+
+          <input
+            type="date"
+            value={checkOutDate}
+            onChange={(e) => setCheckOutDate(e.target.value)}
+            style={{ padding: '10px', marginRight: '10px' }}
+          />
+
+          <input
+            type="number"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            min="1"
+            style={{ padding: '10px', marginRight: '10px' }}
+            placeholder="Guests"
+          />
+
+          <button
+            type="submit"
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#f4811e',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Search Hotels
+          </button>
+        </form>
+      </div>
+
+      {/* Hotel Cards Section */}
+      <div
+        className="hotel-cards-container"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          marginTop: '20px',
+          overflowY: 'auto',
+          height: 'calc(100vh - 350px - 20px - 20px - 30px)',
+          marginBottom: '20px',
+        }}
+      >
+        {hotels.map((hotel, index) => (
+          <div
+            key={index}
+            className="hotel-card"
+            style={{
+              margin: '16px',
+              textAlign: 'center',
+              width: '300px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              padding: '10px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              src={hotel.image}
+              alt={hotel.name}
+              style={{
+                width: '100%',
+                height: '200px',
+                objectFit: 'cover',
+                borderRadius: '8px',
+              }}
+            />
+            <h3 className="hotel-name" style={{ marginTop: '10px' }}>
+              {hotel.name}
+            </h3>
+            <p className="hotel-location">{hotel.location}</p>
+            <p className="hotel-price">{hotel.price}</p>
+            <button
+              className="cart-button"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#f4811e',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+              onClick={() => addToCart(hotel)} // Make sure addToCart is accessible
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Display Cart Count */}
+      <div
+        className="cart-count"
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          backgroundColor: '#f4811e',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: '50%',
+         
+        }}
+      >
+        Cart: {cart.length}
       </div>
     </div>
   );

@@ -1,0 +1,382 @@
+/* DestinationPage.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 10%; /* Adjust width as needed */
+  background-color: whitesmoke;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #f9f4f4;
+  gap: 5px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: rgb(15, 171, 44)
+}
+
+.dot {
+  color: red;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  margin: 15px 0;
+  cursor: pointer;
+  color: rgb(120, 120, 171);
+}
+
+.menu li.active {
+  font-weight: bold;
+  
+}
+
+.menu li:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+.promotion {
+  background-color: #b4f0f8;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.logout {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Main Content */
+.main-content {
+  
+  display: flex;
+  padding: 20px;
+  background-color: #cedfe5;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.header {
+  height: 10vh;
+  width: 90%;
+  display: flex;
+  margin-bottom: 0px;
+  flex-direction: column;
+  background-color: #cedfe5;
+}
+
+
+.search-bar {
+  width: 250px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: auto;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+p {
+  margin: 0;
+  font-size: 1rem;
+  color: #666; /* Optional: adjust the text color */
+}
+
+.destinations{
+  flex: 1;
+  display: flex;
+  position: relative;
+  margin-top: 0vh;
+  flex-direction: column;
+  /* margin-right: 20%;
+  margin-bottom: 20px; */
+  height: 100vh;
+  overflow: hidden;
+
+} 
+
+.destinations h2{
+  text-align: left;
+  margin: 10px 0;
+}
+
+.best-destinations {
+  flex: 1;
+  width: 80%; /* Adjust width as needed */
+  margin-top: 20px;
+  display: block;
+  overflow-y: auto;
+}
+
+.destination-cards {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 0;
+  justify-content: space-between;
+  margin-bottom: 50%;
+}
+
+.destination-card {
+  width: 160px; /* Adjust to control card size */
+  /* border: 1px dotted #ccc; */
+  height: 30vh;
+  border-radius: 3px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  margin-bottom: 30%;
+  margin-right: 10px;
+  margin-top: 10px;
+  color: whitesmoke;
+  padding: 0px;
+  padding-bottom: 10px;
+  /* box-sizing: border-box; */
+}
+
+
+.destination-image  {
+  width: 100%;
+  height: 30vh;
+  display: inline-block;
+  position: relative;
+  border-radius: 30px;
+ overflow: hidden;
+ padding: 0;
+}
+
+.destination-info{
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  right: 10px;
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  justify-content: space-between;
+  border-radius: 10px;
+  display: flexbox;
+  gap: 0;
+  .hover{
+    color: whitesmoke;
+  }
+}
+
+.destination-info .name,
+.destination-info .location {
+  margin: 0;
+  display: block;
+  text-emphasis: left;
+  
+}
+
+.destination-info .ratings {
+  margin-left: auto;
+  text-align: right; /* Align the rating to the right */
+}
+
+
+.best-list .best-item {
+  width: 50%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 1px;
+  border-radius: 5px;
+  height: 10vh;
+}
+
+.promo-banner {
+  position: absolute;
+  bottom: 20px;
+  right: 340px;
+  height: 30vh;
+  background-color: #9fb0b6;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.promo-banner h3 {
+  margin-bottom: 10px;
+}
+
+.book-now {
+  background: white;
+  color: #87d798;
+  gap: 30px;
+  border: 1px solid #87d798;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.book-now:hover {
+  background: #77da81;
+}
+/* Right Sidebar */
+.right-sidebar {
+  width: 20%; /* Adjust width as needed */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.my-schedule {
+  margin-bottom: 10px;
+}
+
+.calendar {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 420px;
+  margin: 0;
+  
+}
+
+.react-calendar {
+  border: none;
+  box-shadow: none;
+}
+
+.react-calendar__tile--active {
+  background: #ff6f61;
+  color: white;
+}
+
+.react-calendar__tile--range {
+  background: #ffe6e1;
+}
+
+.react-calendar__tile:hover {
+  background: #f0f0f0;
+}
+
+
+.react-calendar_month-viewdays_day {
+  border: unset;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  height: 85%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #F5F5F5;
+  color: #6699CC;
+}
+
+.modalcontent {
+  display: flex;
+  flex-direction: column;
+}
+
+.closebtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.event-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.event-tile {
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.event-image {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.date-picker {
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.people {
+  margin-top: 30px;
+}
+.personselector {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+}
+
+.booknowbtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.booknowbtn:hover {
+  background-color: #0671e3;
+}

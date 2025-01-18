@@ -44,7 +44,7 @@
     flex-grow: 1; /* Occupies remaining width */
     display: flex;
     flex-direction: column;
-    background-color: #f8f9fa;
+    background-color: #ffffff95;
     overflow-y: auto; /* Enable scrolling if content overflows */
   }
   

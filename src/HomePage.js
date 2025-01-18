@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import img from './Images/GoBeyond.jpg';
+import img from './Images/Logo.jpg';
+import imgg from './Images/sunny_beach.jpg';
 import { FaSearch, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,13 +12,10 @@ const Homepage = () => {
       <NavBar>
         <Logo src={img} alt="GoBeyond Logo"></Logo>
         <NavLinks>
-          <NavLink href="#home">Home</NavLink>
-          <NavLink href="#tours">Tours</NavLink>
-          <NavLink href="#explore">Explore</NavLink>
-          <NavLink href="#about">About Us</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
+          <NavLink onClick={() => navigate('/about')}>About Us</NavLink>
+          <NavLink onClick={() => navigate('/cart')}>My Cart</NavLink>
           <SearchIcon>
-            <FaSearch />
+            <NavLink onClick={() =>navigate('/signin')}>Logout</NavLink>
           </SearchIcon>
         </NavLinks>
       </NavBar>
@@ -25,19 +23,18 @@ const Homepage = () => {
       <Content>
         <TextSection>
           <Heading>Never Stop Exploring the World.</Heading>
-          <SubHeading>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <SubHeading><em><q>Live life with no excuses, travel with no regret</q></em>
+          
           </SubHeading>
-          <Button>Learn More</Button>
+          {/* <Button onClick={() => navigate('/signup')}>Get Started</Button> */}
         </TextSection>
 
         <CardSection>
-          <Card onClick={() => navigate('/beach')}>
+          {/* <Card onClick={() => navigate('/beach')}>
             <CardImage src="https://images.pexels.com/photos/15917105/pexels-photo-15917105/free-photo-of-clear-sky-over-an-umbrella-and-deck-chairs-on-a-sandy-beach.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"  />
             <CardTitle>BEACH</CardTitle>
-          </Card>
-          <Card onClick={() => navigate('/nature')}>
+          </Card> */}
+          <Card onClick={() => navigate('/beach')}>
             <CardImage src="https://images.pexels.com/photos/4915984/pexels-photo-4915984.jpeg?auto=compress&cs=tinysrgb&w=600" />
             <CardTitle>NATURE</CardTitle>
           </Card>
@@ -45,18 +42,19 @@ const Homepage = () => {
             <CardImage src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" />
             <CardTitle>HOTEL</CardTitle>
           </Card>
-          {/* <Card>
-            <CardImage src=" https://images.pexels.com/photos/29090844/pexels-photo-29090844/free-photo-of-hiker-in-rugged-mountain-landscape.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-            <CardTitle>TREKKING</CardTitle>
-          </Card> */}
+          
           <Card onClick={() => navigate('/destinations')}>
             <CardImage src=" https://images.pexels.com/photos/460740/pexels-photo-460740.jpeg?auto=compress&cs=tinysrgb&w=600"/>
             <CardTitle>DESTINATIONS</CardTitle>
           </Card>
-          <Card>
+          <Card onClick={() => navigate('/flight')}>
             <CardImage src=" https://images.pexels.com/photos/3050833/pexels-photo-3050833.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-            <CardTitle>ITINERARY</CardTitle>
+            <CardTitle>Tours & Travel</CardTitle>
           </Card>
+          <Card onClick={() => navigate('/bookings')}>
+            <CardImage src=" https://images.pexels.com/photos/29090844/pexels-photo-29090844/free-photo-of-hiker-in-rugged-mountain-landscape.jpeg?auto=compress&cs=tinysrgb&w=600"/>
+          <CardTitle>Bookings</CardTitle>
+          </Card> 
         </CardSection>
       </Content>
 
@@ -82,8 +80,8 @@ export default Homepage;
 
 // Styled Components
 const MainContainer = styled.div`
-  background: url(https://images.pexels.com/photos/29848859/pexels-photo-29848859/free-photo-of-scenic-view-of-bellagio-in-lombardy-italy.jpeg?auto=compress&cs=tinysrgb&w=600) no-repeat center
-    center/cover;
+  background: url(${imgg}) no-repeat center
+  center/cover;
   height: 103vh;
   display: flex;
   flex-direction: column;
@@ -94,7 +92,7 @@ const NavBar = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.3rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.3);
 `;
 
 const Logo = styled.img`

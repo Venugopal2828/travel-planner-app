@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
 import styled from 'styled-components';
 //import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -8,8 +9,49 @@ import axios from 'axios';
 import imagenote from './pic1.png';
 //import Dashboard from './components/Dashboard';
 
-const SignUpPage = () => {
-  const navigate = useNavigate();
+// const SignUpPage = () => {
+  // const navigate = useNavigate();
+
+  const SignUpPage = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+      username: "",
+      email: "",
+      password: "",
+    });
+  
+    const [message, setMessage] = useState("");
+  
+    // Handle form input changes
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+    // Handle form submission
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const response = await fetch("http://localhost:8083/user/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        if (response.ok) {
+          const data = await response.text(); // Assuming the backend sends a success message
+          setMessage(`Success: ${data}`);
+        } else {
+          const errorData = await response.text();
+          setMessage(`Error: ${errorData}`);
+        }
+      } catch (error) {
+        setMessage(`Error: ${error.message}`);
+      }
+    };
 
   // // Handle Google Login Success
   // const handleGoogleSuccess = async (credentialResponse) => {
@@ -36,26 +78,26 @@ const SignUpPage = () => {
   // };
 
   // Handle Google Login Success
-  const handleGoogleSuccess = (credentialResponse) => {
-    console.log('Google Login Success:', credentialResponse);
-
-    // Mock user data
-    const mockUser = {
-      email: 'user@gmail.com',
-      name: 'Google User',
-      token: credentialResponse.credential,
-    };
-
-    // Save to localStorage
-    localStorage.setItem('user', JSON.stringify(mockUser));
-
-    // Redirect to dashboard
-    navigate('/dashboard');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const token = credentialResponse.credential; //Google Token
+    
+    try{
+      const response = await axios.post('http://localhost:8080/user/google-login', {token});
+      if (response.status === 200){
+        console.log('Google Login Success:', response.data);
+        localStorage.setItem('authToken', response.data.token);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Error during Google Login:', error.response?.data || error.message);
+      setMessage("Google Login Failed. Please try again");
+    }
   };
 
+  // Handle Google Login Failure
   const handleGoogleFailure = () => {
     console.log('Google Login Failed');
-    alert('Google login failed. Please try again.');
+    alert("Google Login Failed. Please try again");
   };
   // // Handle Facebook Login Success
   // const handleFacebookResponse = async (response) => {
@@ -81,39 +123,40 @@ const SignUpPage = () => {
   //   }
   // };
 
-  // Regular Sign-Up Handler (example only)
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  // // Regular Sign-Up Handler (example only)
+  // const handleSignUp = async (e) => {
+  //   e.preventDefault();
 
-    const userData = {
-      username: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
+  //   const userData = {
+  //     username: e.target.username.value,
+  //     email: e.target.email.value,
+  //     password: e.target.password.value,
+  //   };
 
-    try {
-      const response = await axios.post('http://localhost:8080/api/auth/signup', userData);
-      console.log('Sign Up Success:', response.data);
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/api/auth/signup', userData);
+  //     console.log('Sign Up Success:', response.data);
 
-      // Save token locally
-      localStorage.setItem('authToken', response.data.token);
+  //     // Save token locally
+  //     localStorage.setItem('authToken', response.data.token);
 
-      // Redirect to dashboard
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Error during Sign Up:', error.response?.data || error.message);
-    }
-  };
+  //     // Redirect to dashboard
+  //     navigate('/dashboard');
+  //   } catch (error) {
+  //     console.error('Error during Sign Up:', error.response?.data || error.message);
+  //   }
+  // };
 
   return (
     <PageContainer>
       <Box>
         <Title>Create Your Account</Title>
-        <Form onSubmit={handleSignUp}>
-          <Input name="username" type="text" placeholder="User Name" required />
-          <Input name="email" type="email" placeholder="Email" required />
-          <Input name="password" type="password" placeholder="Password" required />
+        <Form onSubmit={handleSubmit}>
+          <Input name="username" type="text" placeholder="User Name"  onChange={handleChange} required />
+          <Input name="email" type="email" placeholder="Email"  onChange={handleChange} required />
+          <Input name="password" type="password" placeholder="Password"  onChange={handleChange} required />
           <Button type="submit">Sign Up</Button>
+          {message && <p>{message}</p>}
         </Form>
 
         {/* Social Login */}
